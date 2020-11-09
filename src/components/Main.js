@@ -19,7 +19,7 @@ function Main(props) {
       api.getInitialCards().then((item) => {
         cards[1](item);
       })
-    },[cards[1]])
+    },[])
 
 
     return (

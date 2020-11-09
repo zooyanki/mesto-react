@@ -10,7 +10,7 @@ function PopupWithForm(props) {
                 <div className="modal__frame">
                     <h3 className="modal__heading">{`${props.title}`}</h3>
                         <>{props.children}</>
-                    <button className="modal__submit-button" type="submit" aria-label="save">Сохранить</button>
+                    <button className="modal__submit-button" type="submit" aria-label="save">{props.buttonText}</button>
                 </div>        
             </form>  
         </div>  
