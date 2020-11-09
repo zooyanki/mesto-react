@@ -75,7 +75,7 @@ function App() {
             <PopupWithForm onClose={closeAllPopups} name="confirmpopup" title="Вы уверены?" buttonText="Да"/>             
 
           
-            <ImagePopup onClose={closeAllPopups} card={selectedCard[0]} />
+            <ImagePopup onClose={closeAllPopups} isOpen={selectedCard[0]} />
     </div>
   );
 

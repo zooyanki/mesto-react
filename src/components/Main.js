@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, {useState, useEffect} from 'react';
 import editAvatarButtom from '../images/update_avatar.svg';
 import {api} from '../Utils/api';
 import Card from './Card';
@@ -15,10 +15,13 @@ function Main(props) {
         userAvatar[1](userInfo.avatar);
         userName[1](userInfo.name);
         userDescription[1](userInfo.about);
-      })
+      }).catch((err) =>
+        console.log("Упс... что-то пошло не так"));
+
       api.getInitialCards().then((item) => {
         cards[1](item);
-      })
+      }).catch((err) =>
+        console.log("Упс... что-то пошло не так"));
     },[])
 
 
@@ -30,7 +33,7 @@ function Main(props) {
                   <img src={userAvatar[0]} className="profile__avatar" alt="Аватар_пользователя" />
                   <div className="profile__overlay">
                     <div className="profile__overlay-background"></div>
-                    <img src={editAvatarButtom} className="profile__updateavatar" onClick={props.onEditAvatar}/>
+                    <img src={editAvatarButtom} alt="Изменение аватара" className="profile__updateavatar" onClick={props.onEditAvatar}/>
                   </div>
                 </div>
                 <div className="profile__info">

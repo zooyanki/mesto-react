@@ -12,8 +12,6 @@ export default class Api {
         }
         return Promise.reject(`Хьюстон, у нас проблемы: ${res.status}`);
       })
-      .catch((err) =>
-        console.log("Упс... что-то пошло не так"));
     }
   
     getInitialCards() {
