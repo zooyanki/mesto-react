@@ -7,8 +7,6 @@
 @import url(__group-container/element__group-container.css);
 @import url(__group-number/element__group-number.css);
 
-
-
 .element {
     border-radius: 10px;
     background-color: white;

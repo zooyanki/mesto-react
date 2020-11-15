@@ -29,7 +29,8 @@ body {
 @import url(./blocks/modal/modal.css);
 
 /*Модификаторы*/
-@import url(./blocks/element/__group/_black/element__group_black.css);
+@import url(./blocks/element/__group/_visible/element__group_visible.css);
+@import url(./blocks/element/__group/_invisible/element__group_invisible.css);
 @import url(./blocks/modal/_opened/modal_opened.css);
 @import url(./blocks/modal/__overlay/_render/modal__overlay_render.css);
 @import url(./blocks/modal/__field/_error/modal__field_error.css);
