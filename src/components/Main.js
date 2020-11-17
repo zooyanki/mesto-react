@@ -1,34 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext} from 'react';
 import editAvatarButtom from '../images/update_avatar.svg';
-import {api} from '../Utils/api';
 import Card from './Card';
-import {currentUserContext, cardContext} from '../contexts/CurrentUserContext';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function Main(props) {
-    const currentUser = useContext(currentUserContext);
-    const cards = useContext(cardContext);
+    const currentUser = useContext(CurrentUserContext); 
     
-    const handleCardLike = (card) => {
-      const isLiked = card.likes.some(item => item._id === currentUser[0]._id);
-      
-      if (!isLiked) {api.addLikeCard(card._id).then((newCard) => {
-          const newCards = cards[0].map((c) => c._id === card._id ? newCard : c);
-          cards[1](newCards);
-      })} else {
-        api.remLikeCard(card._id).then((newCard) => {
-          const newCards = cards[0].map((c) => c._id === card._id ? newCard : c);
-          cards[1](newCards)
-        })}
-    } 
-
-    const handleCardDelete = (card) => {
-      const isOwn = card.owner._id === currentUser[0]._id;
-
-      // if (!isOWn) {api.delInitialCards(card._id).then((delCard) => {
-      //     const delCard = cards[]
-      // })}
-    }
-
     return (
           <main>
             <section className="profile block-width">
@@ -47,7 +24,7 @@ function Main(props) {
                 <button className="profile__add-button" type="button" aria-label="Add_profile" onClick={props.onAddPlace}></button>
             </section>
             <section className="elements block-width">
-              {cards[0].map((card, i) => <Card image={card} key={i} onCardClick={props.onCardClick} onCardDelete={handleCardDelete} onCardLike={handleCardLike}/>)}          
+              {props.cards[0].map((card, i) => <Card image={card} key={i} onCardClick={props.onCardClick} onCardDelete={props.onCardDelete} onCardLike={props.onCardLike}/>)}          
             </section>             
           </main>
     );
