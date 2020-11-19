@@ -35,11 +35,11 @@ function EditProfilePopup(props) {
     return (
         <PopupWithForm isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} name="editor" title="Редактировать профиль" buttonText="Сохранить">
                         <label className="modal__label">
-                            <input className="modal__field modal__field_editor-name" value={name[0] || ' '} onChange={handleChangeName} id="input-editor-name" defaultValue="" name="name" type="text" placeholder="Введите ваше имя" minLength="2" maxLength="40" required/>
+                            <input className="modal__field modal__field_editor-name" value={name[0] || ' '} onChange={handleChangeName} id="input-editor-name" name="name" type="text" placeholder="Введите ваше имя" minLength="2" maxLength="40" required/>
                             <span className="modal__input-error" id="input-editor-name-error"></span>
                         </label>
                         <label className="modal__label">
-                            <input className="modal__field modal__field_editor-status" value={description[0] || ' '} onChange={handleChangeDescription} id="input-editor-status" defaultValue="" name="about" type="text" placeholder="Введите вашу профессию" minLength="2" maxLength="200" required/>
+                            <input className="modal__field modal__field_editor-status" value={description[0] || ' '} onChange={handleChangeDescription} id="input-editor-status" name="about" type="text" placeholder="Введите вашу профессию" minLength="2" maxLength="200" required/>
                             <span className="modal__input-error" id="input-editor-status-error"></span>
                         </label>          
         </PopupWithForm>) 

@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import {api} from '../Utils/api';
 import {CurrentUserContext, CardContext} from '../contexts/CurrentUserContext';
@@ -35,7 +36,8 @@ function App() {
     api.delInitialCards(card._id).then(() => {
       const newCards = cards[0].filter(item => item._id !== card._id);
       cards[1](newCards);
-      })
+      }).catch((err) =>
+      console.log("Упс... что-то пошло не так"));
     }
 
   const handleCardLike = (card) => {
@@ -52,10 +54,23 @@ function App() {
     } 
     
     
-  const handleUpdateUser = ({name, about}) => {
-    api.setUserInfo(name, about).then((name, about)=> {
+  const handleUpdateUser = (infoUser) => {
+    api.setUserInfo(infoUser.name, infoUser.about).then((name, about)=> {
       currentUser[1](name, about);
-      closeAllPopups();
+    })
+  }
+
+  const handleUpdateAvatar = (avatar) => {
+
+    api.setUserAvatar(avatar.avatar).then((a) => {
+      currentUser[1](a);
+    })
+  }
+
+  const handleAddPlaceSubmit = (image) => {
+    api.setInitialCard(image.name, image.link).then((newCard) => {
+      console.log(newCard);
+      cards[1]([newCard, ...cards[0]])
     })
   }
   
@@ -92,22 +107,11 @@ function App() {
               <Footer/>
         </div>
 
-          <PopupWithForm isOpen={isAddPlacePopupOpen[0]} onClose={closeAllPopups} name="newform" title="Новое место" buttonText="Сохранить">
-                <>            
-                  <label className="modal__label">
-                    <input className="modal__field modal__field_newform-name" id="input-newform-name" defaultValue="" name="name"  placeholder="Название" minLength="2" maxLength="30" type="text" required/>
-                    <span className="modal__input-error" id="input-newform-name-error"></span>
-                  </label>
-                  <label className="modal__label">
-                    <input className="modal__field modal__field_newform-link" id="input-newform-url" defaultValue="" name="link" placeholder="Ссылка на картинку" type="url" required/>
-                    <span className="modal__input-error" id="input-newform-url-error"></span>
-                  </label>
-                </>
-            </PopupWithForm>
-
+            <AddPlacePopup isOpen={isAddPlacePopupOpen[0]} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+       
             <EditProfilePopup isOpen={isEditProfilePopupOpen[0]} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
                   
-            <EditAvatarPopup isOpen={isEditAvatarPopupOpen[0]} onClose={closeAllPopups} />
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen[0]} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
             
             <PopupWithForm onClose={closeAllPopups} name="confirmpopup" title="Вы уверены?" buttonText="Да"/>             
 
