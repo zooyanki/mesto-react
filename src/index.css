@@ -27,6 +27,7 @@ body {
 @import url(./blocks/element/element.css);
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/modal/modal.css);
+@import url(./blocks//sign/sign.css);
 
 /*Модификаторы*/
 @import url(./blocks/element/__group/_visible/element__group_visible.css);

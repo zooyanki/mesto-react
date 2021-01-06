@@ -1,5 +1,7 @@
-// import './index.css';
+import React from 'react';   
 import {useState, useEffect} from 'react';
+import {Switch, BrowserRouter, Route} from 'react-router-dom';
+import {Redirect} from 'react-router';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -8,6 +10,8 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
+import Login from './Login';
+import Register from './Register';
 import {api} from '../Utils/api';
 import {CurrentUserContext, CardContext} from '../contexts/CurrentUserContext';
 
@@ -20,6 +24,7 @@ function App() {
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(false);
   const [targetCard, setTargetCard] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
 
 
   useEffect(()=>{
@@ -111,32 +116,50 @@ function App() {
     setSelectedCard(false);
   }
 
-  return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <CardContext.Provider value={cards}>
-      <div className="App">
-      
-        <div className="content">
-              <Header/>                
-              <Main cards={cards} onConfirmPopup={openPopupConfirm} onEditProfile={openPopupEditor} onAddPlace={openPopupNewForm} onEditAvatar={openPopupAvatar} onCardClick={handleCardClick} onCardLike={handleCardLike}/>
-              <Footer/>
-        </div>
+  
 
-            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-       
-            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-                  
-            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-            
-            <ConfirmPopup onClose={closeAllPopups} isOpen={isConfirmPopupOpen} onCardDelete={handleCardDelete}/>             
-
-            <ImagePopup onClose={closeAllPopups} isOpen={selectedCard} />
+        return (
+          <BrowserRouter>
+            <CurrentUserContext.Provider value={currentUser}>
+              <CardContext.Provider value={cards}>
+              <div className="App">
               
-      </div>
-      </CardContext.Provider>
-    </CurrentUserContext.Provider>  
-  );
-
+                <div className="content">
+                      <Header/>
+                      <main>
+                        <Switch>              
+                          <Route exact path="/">
+                            {loggedIn ? <Redirect to="/signin"/> : <Redirect to="/main"/>}
+                          </Route>
+                          <Route exact path="/main">
+                            <Main cards={cards} onConfirmPopup={openPopupConfirm} onEditProfile={openPopupEditor} onAddPlace={openPopupNewForm} onEditAvatar={openPopupAvatar} onCardClick={handleCardClick} onCardLike={handleCardLike}/>
+                          </Route>
+                          <Route exact path="/signin">
+                            <Login/>
+                          </Route>
+                          <Route exact path="/signup">
+                            <Register/>
+                          </Route>
+                        </Switch>
+                      </main>
+                      <Footer/>
+                </div>
+        
+                    <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+              
+                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+                          
+                    <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+                    
+                    <ConfirmPopup onClose={closeAllPopups} isOpen={isConfirmPopupOpen} onCardDelete={handleCardDelete}/>             
+        
+                    <ImagePopup onClose={closeAllPopups} isOpen={selectedCard} />
+                      
+              </div>
+              </CardContext.Provider>
+            </CurrentUserContext.Provider>
+          </BrowserRouter>  
+        );
 }
 
 export default App;
