@@ -1,28 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {withRouter} from 'react-router-dom';
+import {apireg} from '../Utils/apireg';
 
-function Login(props) {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: 'E-mail',
+            password: 'Пароль'
+        }
+        this.handleChange = this.handleChange.bind(this); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
-    const handleChangePassword = (e) => {
-        setPassword(e.taget.value); 
+
+    handleChange = (e) => {
+        const {name, value} = e.target;
+        this.setState({
+            [name]: value
+        })
     }
 
-    return (
-        <div className="sign">
-            <h2 className="sign__header">Вход</h2>
-            <input className="sign__input" value="E-mail"></input>
-            <input className="sign__input" value="Password"></input>
-            <button className="sign__buttonSubmit">Войти</button>
-        </div>
-    )
+    handleSubmit = (e) => {
+        e.preventDefault(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (!this.state.email || !this.state.password) {
+            return;
+        }
+        apireg.signin(this.state.password, this.state.email).then((data) => {
+            console.log(data);
+            if (data.token) {
+                this.setState({password:'', email:''},() => {
+                    this.props.handleLogin();
+                    this.props.history.push('/main');
+                })
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
+    render() {
+        return (
+            <div className="sign">
+                <h2 className="sign__header">Вход</h2>
+                <input className="sign__input" name="email" value={this.state.email} onChange={this.handleChange} type="email"/>
+                <input className="sign__input" name="password" value={this.state.password} onChange={this.handleChange} type="password"/>
+                <button className="sign__buttonSubmit" type="submit" onClick={this.handleSubmit}>Войти</button>
+            </div>
+        )
+    }
 }
 
-export default Login;
+export default withRouter(Login);
 
 
 
