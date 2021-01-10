@@ -5,4 +5,9 @@
     color: white;
     text-decoration: none;
     cursor: pointer;
+    
+}
+
+.header__link:last-child {
+    margin-left: 24px;
 }

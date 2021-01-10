@@ -26,15 +26,17 @@ class Login extends React.Component {
             return;
         }
         apireg.signin(this.state.password, this.state.email).then((data) => {
-            console.log(data);
             if (data.token) {
                 this.setState({password:'', email:''},() => {
                     this.props.handleLogin();
                     this.props.history.push('/main');
+                    this.props.onInfoToolTip();
                 })
             }
         })
-        .catch(err => console.log(err));
+        .catch((err) => {
+            this.props.onInfoToolTip();
+            console.log(err)});
     }
 
     render() {

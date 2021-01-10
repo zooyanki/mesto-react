@@ -7,7 +7,10 @@ function Header(props) {
         <>
             <header className="header block-width">
                 <img src={Logo} className="header__logo" alt="Лого Место"/>
-                <a className="header__link" href={props.value.link} onClick={props.onSelectLogin}>{props.value.text}</a>
+                <div className="header__nav">
+                    <h2 className="header__link">{props.email}</h2>
+                    <a className="header__link" href={props.link} onClick={props.onSign}>{props.text}</a>
+                </div>
             </header>
         </>
     );

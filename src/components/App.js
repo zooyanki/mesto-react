@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {Switch, BrowserRouter, Route, useHistory} from 'react-router-dom';
-import {Redirect} from 'react-router';
+import {Switch, Route, useHistory} from 'react-router-dom';
+import {createBrowserHistory} from 'history';
+import {withRouter} from 'react-router';
 
 import {CurrentUserContext, CardContext} from '../contexts/CurrentUserContext';
-import {EnterContext, enter} from '../contexts/EnterContext';
 
 import Header from './Header';
 import Main from './Main';
@@ -16,11 +16,14 @@ import ImagePopup from './ImagePopup';
 import Login from './Login';
 import Register from './Register';
 import InfoToolTip from './InfoToolTip';
+import ProtectedRoute from './ProtectedRoute';
 
 import {api} from '../Utils/api';
-import {apireg} from '../Utils/apireg';
+import { apireg } from '../Utils/apireg';
 
 function App() {
+  const history = useHistory();
+  const [userEmail, setUserEmail] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [cards, setCards] = useState([]);
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
@@ -33,10 +36,19 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [regin, setRegin] = useState(false);
 
-  console.log(regin);
-
-
   useEffect(()=>{
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      
+      apireg.usersme(token).then((res) => {
+        if (res) {
+          setUserEmail(res.data.email);
+          setLoggedIn(true);          
+          history.push('/main');
+        }
+      })
+    }
+
     api.getUserInfo().then((userInfo)=>{
       setCurrentUser(userInfo);
       }).catch((err) =>
@@ -45,8 +57,7 @@ function App() {
     api.getInitialCards().then((item) => {
         setCards(item);
         }).catch((err) =>
-          console.log("Упс... что-то пошло не так"));
-
+          console.log("Упс... что-то пошло не так"));  
   },[])
 
 //Удаление карты
@@ -99,13 +110,22 @@ function App() {
     console.log("Упс... что-то пошло не так"));
   }
 
+  //Проверка авторизации
 const handleLogin = () => {
   setLoggedIn(true);
 }
-//Переключение окон входа
-  const selectLogin = () => {
-      if (regin === false) {setRegin(true)}
-      else {setRegin(false)};
+
+  const signOut = () => {
+    localStorage.removeItem('token');
+    history.push('/signin');
+  }
+
+  const signIn = () => {
+    history.push('/signin');
+  }
+
+  const signUp = () => {
+    history.push('signUp')
   }
 
   const handleCardClick = (card) => {
@@ -127,8 +147,7 @@ const handleLogin = () => {
     setTargetCard(card);
   }
 
-//Всплывающее окно о подтверждении регистрации
-  const openPopupInfoToolTip = () => {
+  const openInfoToolTip = () => {
     setIsInfoToolTip(true);
   }
 
@@ -142,41 +161,36 @@ const handleLogin = () => {
   }  
 
         return (
-          <BrowserRouter>
             <CurrentUserContext.Provider value={currentUser}>
               <CardContext.Provider value={cards}>
                 
                 <div className="App">                
                   <div className="content">
-                    <EnterContext.Provider value={enter}>
-                        <Header value={regin ? enter.login : enter.register} onSelectLogin={selectLogin}/>
+
                         <main>
                           <Switch>
 
-                            <Route exact path="/">
-                              {loggedIn ? <Redirect to="/main"/> : <Redirect to="/signup"/>}
-                            </Route>
+                            <ProtectedRoute exact path="/" loggedIn={loggedIn} />
 
                             <Route exact path="/main">
+                              <Header text="Выход" email={userEmail} onSign={signOut}/>  
                               <Main cards={cards} onConfirmPopup={openPopupConfirm} onEditProfile={openPopupEditor} onAddPlace={openPopupNewForm} onEditAvatar={openPopupAvatar} onCardClick={handleCardClick} onCardLike={handleCardLike}/>
                             </Route>
 
                             <Route exact path="/signin">
-                              <Login handleLogin={handleLogin}/>
+                              <Header text="Регистрация" onSign={signUp}/>
+                              <Login handleLogin={handleLogin} onInfoToolTip={openInfoToolTip}/>
                             </Route>
 
-                            <Route exact path="/signup">
+                            <Route exact path="/signup" >
+                              <Header text="Войти" onSign={signIn}/>
                               <Register/>
-                            </Route>
-
-                            <Route exact path="/infotool">
-                              <InfoToolTip isOpen={isInfoToolTip} onClose={closeAllPopups}/>
                             </Route>
 
                           </Switch>
                         </main>
                         <Footer/>
-                    </EnterContext.Provider>
+
                   </div>
         
                     <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
@@ -188,15 +202,16 @@ const handleLogin = () => {
                     <ConfirmPopup onClose={closeAllPopups} isOpen={isConfirmPopupOpen} onCardDelete={handleCardDelete}/>             
         
                     <ImagePopup onClose={closeAllPopups} isOpen={selectedCard} />
+
+                    <InfoToolTip isOpen={isInfoToolTip} onClose={closeAllPopups}/>
                       
               </div>
 
               </CardContext.Provider>
             </CurrentUserContext.Provider>
-          </BrowserRouter>  
         );
 }
 
-export default App;
+export default withRouter(App);
 
 

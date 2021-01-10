@@ -2,27 +2,6 @@ import React, { useState, useRef } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {apireg} from '../Utils/apireg';
 import { render } from 'react-dom';
-// function Register (props) {
-    
-//     const [email, setEmailValue] = useState('');
-//     const [password, setPasswordValue] = useState('');
-
-//     function handleChangeEmail(event) {
-//         setEmailValue(event.target.value);
-//     }
-
-//     function handleChangePassword(event) {
-//         setPasswordValue(event.target.value);
-//     }
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-
-//         props.onCreateUser({
-//             email: email,
-//             password: password
-//         })    
-//     }
 
 class Register extends React.Component {
     constructor(props) {
@@ -50,6 +29,7 @@ class Register extends React.Component {
                 this.setState({message :
                 ''}, () => {
                     this.props.history.push('/signin');
+                    console.log(this.props.history.push('/signin'))
                 })
             } else {
                 this.setState({
@@ -63,7 +43,7 @@ class Register extends React.Component {
     render() {
         return (
             <div className="sign">
-                <h2 className="sign__heveader">Регистрация</h2>
+                <h2 className="sign__header">Регистрация</h2>
                 <input className="sign__input" name="email" value={this.state.email} onChange={this.handleChange} type="email"/>
                 <input className="sign__input" name="password" value={this.state.password} onChange={this.handleChange} type="password"/>
                 <button className="sign__buttonSubmit" type="submit" onClick={this.handleSubmit}>Зарегистрировать</button>

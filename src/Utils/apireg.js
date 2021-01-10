@@ -55,16 +55,13 @@ export default class ApiReg {
         })
     }
 
-    usersme(email) {
+    usersme(token) {
         return this._fetch(`/users/me`, {
             method: 'GET',
             headers: {
               'Content-Type' : 'application/json',
-              "Authorization" : `Bearer ${localStorage.getItem('token')}`
-              },
-            body: JSON.stringify({
-                email
-            })
+              "Authorization" : `Bearer ${token}`
+            }
         })
     } 
 
