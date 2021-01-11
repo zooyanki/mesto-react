@@ -30,12 +30,11 @@ class Login extends React.Component {
                 this.setState({password:'', email:''},() => {
                     this.props.handleLogin();
                     this.props.history.push('/main');
-                    this.props.onInfoToolTip();
                 })
             }
         })
-        .catch((err) => {
-            this.props.onInfoToolTip();
+        .catch((err) => {            
+            this.props.onInfoToolTip(err);
             console.log(err)});
     }
 

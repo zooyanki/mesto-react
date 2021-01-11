@@ -31,10 +31,10 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(false);
-  const [isInfoToolTip, setIsInfoToolTip] = useState(false);
+  const [isInfoToolTip, setIsInfoToolTip] = useState(false);  
+  const [errorInfoToolTip, setErrorInfoToolTip] = useState(false);
   const [targetCard, setTargetCard] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [regin, setRegin] = useState(false);
 
   useEffect(()=>{
     if (localStorage.getItem('token')) {
@@ -147,8 +147,9 @@ const handleLogin = () => {
     setTargetCard(card);
   }
 
-  const openInfoToolTip = () => {
+  const openInfoToolTip = (err) => {
     setIsInfoToolTip(true);
+    setErrorInfoToolTip(err);
   }
 
   const closeAllPopups = () => {
@@ -184,7 +185,7 @@ const handleLogin = () => {
 
                             <Route exact path="/signup" >
                               <Header text="Войти" onSign={signIn}/>
-                              <Register/>
+                              <Register onInfoToolTip={openInfoToolTip}/>
                             </Route>
 
                           </Switch>
@@ -201,9 +202,9 @@ const handleLogin = () => {
                     
                     <ConfirmPopup onClose={closeAllPopups} isOpen={isConfirmPopupOpen} onCardDelete={handleCardDelete}/>             
         
-                    <ImagePopup onClose={closeAllPopups} isOpen={selectedCard} />
+                    <ImagePopup onClose={closeAllPopups} isOpen={selectedCard}/>
 
-                    <InfoToolTip isOpen={isInfoToolTip} onClose={closeAllPopups}/>
+                    <InfoToolTip isOpen={isInfoToolTip} onClose={closeAllPopups} onError={errorInfoToolTip}/>
                       
               </div>
 

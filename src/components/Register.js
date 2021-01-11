@@ -29,6 +29,7 @@ class Register extends React.Component {
                 this.setState({message :
                 ''}, () => {
                     this.props.history.push('/signin');
+                    this.props.onInfoToolTip();
                     console.log(this.props.history.push('/signin'))
                 })
             } else {
