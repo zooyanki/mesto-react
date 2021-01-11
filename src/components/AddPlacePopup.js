@@ -1,9 +1,7 @@
 import PopupWithForm from './PopupWithForm';
-import {useState, useEffect, useContext, useRef} from 'react';
-import {CurrentUserContext, CardContext} from '../contexts/CurrentUserContext';
+import {useRef} from 'react';
 
 function AddPlacePopup (props) {
-
 
     const cardNameRef = useRef();
     const cardLinkRef = useRef();

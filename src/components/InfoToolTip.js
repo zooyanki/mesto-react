@@ -1,5 +1,4 @@
 import React from 'react';
-import PopupWithForm from './PopupWithForm';
 import regOk from '../images/reg_ok.svg';
 import regNotOk from '../images/reg_not_ok.svg';
 

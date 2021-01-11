@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import React from 'react';
+import {withRouter} from 'react-router-dom';
 import {apireg} from '../Utils/apireg';
-import { render } from 'react-dom';
+
 
 class Register extends React.Component {
     constructor(props) {

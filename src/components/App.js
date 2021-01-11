@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Switch, Route, useHistory} from 'react-router-dom';
-import {createBrowserHistory} from 'history';
 import {withRouter} from 'react-router';
 
 import {CurrentUserContext, CardContext} from '../contexts/CurrentUserContext';

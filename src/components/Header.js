@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import Logo from '../images/Vector.svg'
 
 function Header(props) {
