@@ -16,6 +16,5 @@
  @media (min-width: 300px) and (max-width: 768px) {
     .modal__frame {
         width: 250px;
-        background-color: red;
     }
  }

@@ -39,3 +39,5 @@ body {
 @import url(./blocks/modal/__submit-button/_invalid/modal__submit-button_invalid.css);
 @import url(./blocks/modal/__heading/_confirmpopup/modal__heading_confirmpopup.css);
 @import url(./blocks/element/__trash/_invisible/element__trash_invisible.css);
+@import url(./blocks/header/__header/_mobile/header__header_mobile.css);
+@import url(./blocks/header/__link-block-mobile/_open/header__link-block-mobile_open.css);

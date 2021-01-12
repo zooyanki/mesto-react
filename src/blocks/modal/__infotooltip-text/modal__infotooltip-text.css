@@ -9,8 +9,15 @@
 
 }
 
-@media screen and (min-width: 300px) and (max-width: 768px) {
+@media screen and (min-width: 426px) and (max-width: 768px) {
     .modal__infotooltip-text {
         width: 244px;
+    }
+}
+
+@media screen and (min-width: 300px) and (max-width: 425px) {
+    .modal__infotooltip-text {
+        width: 244px;
+        font-size: 20px;
     }
 }

@@ -41,7 +41,7 @@ function App() {
       
       apireg.usersme(token).then((res) => {
         if (res) {
-          setUserEmail(res.data.email);
+          // setUserEmail(res.data.email);
           setLoggedIn(true);          
           history.push('/main');
         }
@@ -110,8 +110,9 @@ function App() {
   }
 
   //Проверка авторизации
-const handleLogin = () => {
+const handleLogin = (email) => {
   setLoggedIn(true);
+  setUserEmail(email);
 }
 
   const signOut = () => {

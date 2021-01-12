@@ -1,6 +1,11 @@
 @import url(__logo/header__logo.css);
 @import url(__link/header__link.css);
 @import url(__nav/header__nav.css);
+@import url(__nav-button/header__nav-button.css);
+@import url(__link-block/header__link-block.css);
+@import url(__header/header__header.css);
+@import url(__link-block-mobile/header__link-block-mobile.css);
+@import url(__nav-buttonClose/header__nav-buttonclose.css);
 
 .header {
     display: flex;
@@ -12,8 +17,15 @@
     padding-bottom: 41px;
 }
 
-@media screen and (min-width: 300px) and (max-width: 767px) {
+@media screen and (min-width: 426px) and (max-width: 767px) {
     .header {
         margin: 28px auto 42px;
+       }
+}
+
+@media screen and (min-width: 300px) and (max-width: 425px) {
+    .header {
+        margin: 0px auto 42px;
+        padding: 20px 0;
        }
 }

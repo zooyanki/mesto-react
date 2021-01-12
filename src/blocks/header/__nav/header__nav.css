@@ -5,3 +5,9 @@
     justify-content: flex-end;
     align-items: center;
 }
+
+@media screen and (min-width: 300px) and (max-width: 767px) {
+    .header__nav {
+        margin-right: 27px;
+    }
+}
